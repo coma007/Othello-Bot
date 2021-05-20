@@ -1,6 +1,5 @@
-from game_structures.Game import *
-from time import time
 from AI import *
+from time import time
 
 pygame.init()
 
@@ -9,7 +8,7 @@ FPS = 60
 pygame.display.set_caption("Othello")
 font = pygame.font.Font('freesansbold.ttf', 15)
 
-table, hashes = gen_hash()
+# table, hashes = gen_hash()
 
 def nortifications(black=2, white=2, time=0.00):
     pygame.draw.rect(WINDOW, WHITE, pygame.Rect(0, 700, 700, 30))
@@ -50,7 +49,7 @@ def main_GUI(game):
                 run = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if game._turn == BLACK:
+                if game._turn == WHITE:
                     position = pygame.mouse.get_pos()
                     row, column = mouse_action(position)
                     moved = game.play(row, column)
@@ -59,13 +58,15 @@ def main_GUI(game):
                         start = time()
                         text, textbox = nortifications(game.black, game.white, elapsed_time)
 
-        if game._turn == WHITE:
-            row, column = igraj_jadnik(game.board, table, hashes)
-            moved = game.play(row, column)
-            if moved:
-                elapsed_time = time() - start
-                start = time()
-                text, textbox = nortifications(game.black, game.white, elapsed_time)
+        #
+        # if game._turn == BLACK:
+        #     # row, column = igraj_jadnik(game.board, table, hashes)
+        #     # moved = game.play(row, column)
+        #     if moved:
+        #         print(hashes)
+        #         elapsed_time = time() - start
+        #         start = time()
+        #         text, textbox = nortifications(game.black, game.white, elapsed_time)
 
         game.update()
         WINDOW.blit(text, textbox)

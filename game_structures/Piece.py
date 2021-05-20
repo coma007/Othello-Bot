@@ -5,12 +5,12 @@ from constants import *
 class Piece:
 
     def __init__(self, row, col, color):
-        # Position on board
+        # Pozicija figurice na tabli
         self._row = row
         self._col = col
         self._color = color
 
-        # GUI
+        # Pozicija figurice u prozoru (GUI)
         self._x = 0
         self._y = 0
         self._position()

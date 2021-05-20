@@ -1,176 +1,200 @@
-from data_structures.GameTree import Tree, TreeNode
-from copy import deepcopy
-from game_structures.Board import *
 from heuristics import *
-from game_structures.Game import *
-# from GUI import *
+from math import inf
+from copy import deepcopy
 
 
-def generate_game_tree(node, depth, color=WHITE):
+def minimax(state, depth, player=WHITE, alpha=-float(inf), beta=float(inf)):
 
-    board = node.data
+    if depth == 0 or len(state.legal_moves) == 0:
+        return heuristics(state), state
 
-    if color == BLACK:
-        color = WHITE
-    else:
-        color = BLACK
-
-    if len(board.legal_moves) == 0 or depth == 1:
-        return
-
-    # print(board.legal_moves, "\n")
-
-    for legal_move in board.legal_moves:
-        row, column = legal_move
-        tmp_board = deepcopy(board)
-        tmp_board.insert(row, column, color)
-
-
-        if color == BLACK:
-            new_color = WHITE
-        else:
-            new_color = BLACK
-
-        tmp_board.all_legal_moves(new_color)
-        new_legal = len(tmp_board.legal_moves)
-        old_legal = tmp_board.old_legal_moves
-        # print(old_legal, new_legal)
-        # print(tmp_board.legal_moves)
-        child = TreeNode(tmp_board)
-        # print(child)
-
-        # print(heuristics_score(tmp_board, color, old_legal, new_legal))
-        node.add_child(child)
-
-    for child in node.children:
-        generate_game_tree(child, depth-1, color)
-
-    # print("odradio stablo")
-    return node
-
-# game = Game(WINDOW)
-
-# print(tree_root)
-# for children in tree_root.children:
-#     print("PARENT")
-#     print(children)
-#     print("CHILDREN")
-#     for child in children.children:
-#         print(child)
-#     print ("--------")
-# tree.breadth(print)
-# print(iter)
-
-
-
-
-
-def value_to_node(node):
-
-    global VALUE
-    if VALUE == heuristics(node):
-        print(node)
-
-
-# tree.breadth(value_to_node)
-
-import random
-
-def init_table():
-
-    table = []
-
-    for i in range(8):
-        column = []
-        for j in range(8):
-            numbers = []
-            for k in range(2):
-                numbers.append(random.randint(0, 255))
-            column.append(numbers)
-        table.append(column)
-
-    return table
-
-
-# table = init_table()
-
-def hash_formula(node, table):
-    board = node.data.board
-    h = 0
-    for i in range(8):
-        for j in range(8):
-            piece = board[i][j]
-            field = table[i][j]
-            if piece != 0:
-                if piece.color == WHITE:
-                    v = 0
-                else:
-                    v = 1
-                p = field[v]
-                h ^= p
-
-    return h
-
-
-def minimax(node, depth, maximizing_player, table, hashes):
-
-    if depth == 0 or node.is_leaf():
-        h = heuristics(node)
-        f = hash_formula(node, table)
-        hashes[f] = (h, node)
-        return h
-
-    if maximizing_player:
+    if player == WHITE:
         value = -100000000
-        for child in node.children:
-            value = max(value, minimax(child, depth-1, False, table, hashes))
-            h = value
-            f = hash_formula(node, table)
-            hashes[f] = (h, node)
-        return value
+        best_move = None
+
+        for legal_row, legal_column in state.legal_moves:
+            tmp_board = deepcopy(state)
+            tmp_board.insert(legal_row, legal_column, WHITE)
+
+            new_value, new_state = minimax(tmp_board, depth-1, BLACK, alpha, beta)
+            value = max(value, new_value)
+            alpha = max(alpha, value)
+            if beta <= alpha:
+                break
+            if value == new_value:
+                best_move = (legal_row, legal_column)
+        return value, best_move
 
     else:
         value = 100000000
-        for child in node.children:
-            value = min(value, minimax(child, depth-1, True, table, hashes))
-            h = value
-            f = hash_formula(node, table)
-            hashes[str(f)] = (h, node)
-        return value
+        best_move = None
 
-# hashes = {}
+        for legal_row, legal_column in state.legal_moves:
+            tmp_board = deepcopy(state)
 
+            tmp_board.insert(legal_row, legal_column, BLACK)
+            # print(tmp_board)
+            new_value, new_state = minimax(tmp_board, depth-1, WHITE, alpha, beta)
+            value = min(value, new_value)
+            beta = min(beta, value)
+            if beta <= alpha:
+                break
+            # print(value)
+            if value == new_value:
+                    best_move = (legal_row, legal_column)
+        return value, best_move
+
+
+WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
+
+game = Game(WINDOW)
+
+state = game.board
+# print(state)
+game.play(2, 3)
+print(state)
+
+
+mimiMa = minimax(state, 7, WHITE)[1]
+row, col = mimiMa
+game.play(row, col)
+print(state)
+print(heuristics(state))
+print(state.legal_moves)
+
+
+state = game.board
+# print(state)
+game.play(5, 1)
+print(state)
+
+mimiMa = minimax(state, 7, WHITE)[1]
+row, col = mimiMa
+game.play(row, col)
+print(state)
+print(heuristics(state))
+print(state.legal_moves)
+
+state = game.board
+# print(state)
+game.play(5, 5)
+print(state)
+
+mimiMa = minimax(state, 7, WHITE)[1]
+row, col = mimiMa
+game.play(row, col)
+print(state)
+print(heuristics(state))
+print(state.legal_moves)
+
+# for legal_row, legal_column in state.legal_moves:
 #
 #
-# VALUE = minimax(tree_root, 3, False)
-# print(VALUE)
-# print(hashes)
+#     tmp_board = deepcopy(state)
+#     tmp_board.insert(legal_row, legal_column, WHITE)
+#     # print(tmp_board)
+#     print("max")
+#     print(legal_row, legal_column, heuristics(tmp_board))
+#     print("min")
+#
+#     for legal_row, legal_column in tmp_board.legal_moves:
+#         tmp_board = deepcopy(state)
+#         tmp_board.insert(legal_row, legal_column, BLACK)
+#         print(legal_row, legal_column, heuristics(tmp_board))
+#         print("jos min")
+#
+#         for legal_row, legal_column in tmp_board.legal_moves:
+#
+#             tmp_board = deepcopy(state)
+#             tmp_board.insert(legal_row, legal_column, BLACK)
+#             print(legal_row, legal_column, heuristics(tmp_board))
+#
+#             for legal_row, legal_column in tmp_board.legal_moves:
+#
+#                 tmp_board = deepcopy(state)
+#                 tmp_board.insert(legal_row, legal_column, BLACK)
+#                 print(legal_row, legal_column, heuristics(tmp_board))
 
 
-def iter_hashes(hashes, value):
-    for pos in hashes:
-        # print(pos)
-        # print(hashes[pos][0])
-        if hashes[pos][0] == value:
 
-            new_position = hashes[pos][1]
-            row, col = new_position.data.last
-            return row, col
 
-def igraj_jadnik(board, table, hashes):
 
-    tree_root = TreeNode(board)
-    tree_root = generate_game_tree(tree_root, 4)
 
-    tree = Tree(tree_root)
 
-    value = minimax(tree_root, 2, True, table, hashes)
-    print("odradio minimax")
-    return iter_hashes(hashes, value)
 
-def gen_hash():
 
-    table = init_table()
-    hashes = {}
 
-    return table, hashes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# print(game.board)
+#
+# node = TreeNode(game.board)
+# print("START", heuristics(node))
+#
+# game.play(2, 3)
+# node = TreeNode(game.board)
+# print("JA", heuristics(node))
+#
+# game.play(4, 2)
+# node = TreeNode(game.board)
+# print("AI", heuristics(node))
+#
+# game.play(5, 2)
+# node = TreeNode(game.board)
+# print("JA", heuristics(node))
+#
+# game.play(2, 4)
+# node = TreeNode(game.board)
+# print("AI", heuristics(node))
+#
+# game.play(4, 5)
+# node = TreeNode(game.board)
+# print("JA", heuristics(node))
+#
+# game.play(4, 6)
+# node = TreeNode(game.board)
+# print("AI", heuristics(node))
+#
+# game.play(3, 2)
+# node = TreeNode(game.board)
+# print("JA", heuristics(node))
+#
+# game.play(1, 2)
+# node = TreeNode(game.board)
+# print("AI", heuristics(node))
+#
+# game.play(5, 5)
+# node = TreeNode(game.board)
+# print("JA", heuristics(node))
+#
+# game.play(3, 1)
+# node = TreeNode(game.board)
+# print("AI", heuristics(node))
+#
+# game.play(2, 2)
+# node = TreeNode(game.board)
+# print("JA", heuristics(node))
+#
+# game.play(6, 1)
+# node = TreeNode(game.board)
+# print("AI", heuristics(node))
+#
+# game.play(1, 5)
+# node = TreeNode(game.board)
+# print("JA", heuristics(node))

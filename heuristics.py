@@ -1,4 +1,4 @@
-from constants import *
+from game_structures.Game import *
 
 
 def board_heuristics(board, color):
@@ -20,7 +20,7 @@ def board_heuristics(board, color):
     this_front = 0
     other_front = 0
 
-    tokens = board.board
+    tokens = board.state
 
     for row in range(ROWS):
         for col in range(COLUMNS):
@@ -79,7 +79,7 @@ def pieces_number_heuristics(board, color):
 
 def corners_heuristics(board, color):
 
-    tokens = board.board
+    tokens = board.state
     corners_score = 0
     near_corner_score = 0
 
@@ -144,9 +144,9 @@ def heuristics_score(board, color, this_legal, other_legal):
 
     return board_score + front_score + pieces_score + corners_score + near_corner_score + mobility_score
 
-def heuristics(node):
 
-    board = node.data
+def heuristics(board):
+
     # print(board)
     color = board.playing
     this_legal = len(board.legal_moves)

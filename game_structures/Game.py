@@ -1,13 +1,14 @@
 from game_structures.Board import *
-# from AI import *
 
 
 class Game(object):
 
     def __init__(self, window):
-        self._board = Board()
-        self._turn = BLACK
+
         self._window = window
+        self._board = Board()
+
+        self._turn = BLACK
         self._legal_moves = self._board.legal_moves
         self.play()
 
@@ -28,6 +29,17 @@ class Game(object):
         if self._legal_moves is not None:
             self._display_legal_moves()
         pygame.draw.rect(self._window, WHITE, pygame.Rect(0, 700, 700, 30))
+
+    # Prikaz svih dozvoljenih poteza za aktuelnog igrača
+    def _display_legal_moves(self):
+
+        for move in self._legal_moves:
+            row, col = move
+            x = SQUARE_SIZE * col + SQUARE_SIZE // 2
+            y = SQUARE_SIZE * row + SQUARE_SIZE // 2
+            radius = SQUARE_SIZE // 2 - 10
+            pygame.draw.circle(self._window, GREY, (x, y), radius+3)
+            pygame.draw.circle(self._window, GREEN1, (x, y), radius)
 
     # Check if the game is still on
     def game_on(self):
@@ -50,40 +62,28 @@ class Game(object):
         else:
             self._turn = BLACK
 
-    # Display all legal moves on the board
-    def _display_legal_moves(self):
-
-        for move in self._legal_moves:
-            row, col = move
-            x = SQUARE_SIZE * col + SQUARE_SIZE // 2
-            y = SQUARE_SIZE * row + SQUARE_SIZE // 2
-            radius = SQUARE_SIZE // 2 - 10
-            pygame.draw.circle(self._window, GREY, (x, y), radius+3)
-            pygame.draw.circle(self._window, GREEN1, (x, y), radius)
-
     def play(self, row=None, column=None):
 
         if row is not None and column is not None:
-            if self._turn == WHITE:
-                pass
             if self._board.insert(row, column, self._turn):
+
                 self._change_turn()
-                self.console()
-                print(self._board)
-                self._board.all_legal_moves(self._turn)
-                print(self._board.legal_moves)
                 self._legal_moves = self._board.legal_moves
+
+                # white plays:
+                # ..............
                 return True
+
             else:
                 return False
 
     def console(self):
-        print("\n    0   1   2   3   4   5   6   7   ")
+        print("\n    0   1   2   3   4   5   6   7   \n")
         for row in range(ROWS):
             print(f"{row} |", end="")
             for column in range(COLUMNS):
                 hint = (row, column) in self._legal_moves
-                data = self._board.board[row][column]
+                data = self._board.state[row][column]
                 if hint and data == 0:
                     print(" + ", end="|")
                 elif data == 0 and not hint:
