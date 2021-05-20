@@ -1,4 +1,5 @@
-from Board import *
+from game_structures.Board import *
+# from AI import *
 
 
 class Game(object):
@@ -7,7 +8,7 @@ class Game(object):
         self._board = Board()
         self._turn = BLACK
         self._window = window
-        self._legal_moves = self._board.all_legal_moves(self._turn, self._window)
+        self._legal_moves = self._board.legal_moves
         self.play()
 
     @property
@@ -63,18 +64,23 @@ class Game(object):
     def play(self, row=None, column=None):
 
         if row is not None and column is not None:
+            if self._turn == WHITE:
+                pass
             if self._board.insert(row, column, self._turn):
                 self._change_turn()
                 self.console()
-                self._legal_moves = self._board.all_legal_moves(self._turn, self._window)
+                print(self._board)
+                self._board.all_legal_moves(self._turn)
+                print(self._board.legal_moves)
+                self._legal_moves = self._board.legal_moves
                 return True
             else:
                 return False
 
     def console(self):
-        print("\n    1   2   3   4   5   6   7   8   ")
+        print("\n    0   1   2   3   4   5   6   7   ")
         for row in range(ROWS):
-            print(f"{row+1} |", end="")
+            print(f"{row} |", end="")
             for column in range(COLUMNS):
                 hint = (row, column) in self._legal_moves
                 data = self._board.board[row][column]
