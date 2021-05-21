@@ -142,7 +142,7 @@ def heuristics_score(board, color, this_legal, other_legal):
     corners_score, near_corner_score = corners_heuristics(board, color)
     mobility_score = mobility_heuristics(this_legal, other_legal)
 
-    return board_score + front_score + pieces_score + corners_score + near_corner_score + mobility_score
+    return board_score + front_score + pieces_score + corners_score + near_corner_score
 
 
 def heuristics(board):
@@ -150,7 +150,7 @@ def heuristics(board):
     # print(board)
     color = board.playing
     this_legal = len(board.legal_moves)
-    other_legal = board.old_legal_moves
+    future_legal = board.future_legal_moves
 
-    return heuristics_score(board, color, this_legal, other_legal)
+    return heuristics_score(board, color, this_legal, future_legal)
 

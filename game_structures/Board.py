@@ -14,8 +14,8 @@ class Board(object):
         self._white = 2
         self._black = 2
 
-        self._old_legal_moves = 0
         self._legal_moves = []
+        self._old_legal_moves = 0
         self._playing = BLACK
         self.all_legal_moves(BLACK)
 
@@ -32,7 +32,7 @@ class Board(object):
         return self._black
 
     @property
-    def old_legal_moves(self):
+    def future_legal_moves(self):
         return self._old_legal_moves
 
     @property
@@ -150,10 +150,13 @@ class Board(object):
             if color == WHITE:
                 self._white += 1
                 self._playing = BLACK
+
             else:
                 self._black += 1
                 self._playing = WHITE
+
             self.all_legal_moves(self._playing)
+
             return True
         else:
             return False

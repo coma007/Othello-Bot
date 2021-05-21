@@ -50,6 +50,7 @@ class Game(object):
         if self.game_on():
             return None
         else:
+            self._turn = None
             if self._board.black > self._board.white:
                 return "BLACK"
             elif self._board.black < self._board.white:
@@ -69,16 +70,16 @@ class Game(object):
 
                 self._change_turn()
                 self._legal_moves = self._board.legal_moves
-
-                # white plays:
-                # ..............
+                self.console()
+                print("Black: ", self._board.black)
+                print("White: ", self._board.white)
                 return True
 
             else:
                 return False
 
     def console(self):
-        print("\n    0   1   2   3   4   5   6   7   \n")
+        print("\n    0   1   2   3   4   5   6   7   ")
         for row in range(ROWS):
             print(f"{row} |", end="")
             for column in range(COLUMNS):
