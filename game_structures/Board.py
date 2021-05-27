@@ -3,13 +3,14 @@ from game_structures.Piece import *
 
 class Board(object):
 
-    def __init__(self, state=None):
+    def __init__(self, mode, state=None):
 
         if state is None:
             self._state = []
         else:
             self._state = state
 
+        self._mode = mode
         self._create_pieces()
         self._white = 2
         self._black = 2
@@ -55,18 +56,20 @@ class Board(object):
                 if i in range(3, 5) and j in range(3, 5):
                     if i == j:
                         color = WHITE
+                        color = WHITE
                     else:
                         color = BLACK
-                    self._state[i].append(Piece(i, j, color))
+                    self._state[i].append(Piece(i, j, color, self._mode))
                 else:
                     self._state[i].append(0)
 
     # Crtanje polja (GUI)
     def _draw_fields(self, window):
-        window.fill(GREEN1)
-        for row in range(ROWS):
-            for col in range(row % 2, ROWS, 2):
-                pygame.draw.rect(window, GREEN2, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+        if self._mode == 2:
+            window.fill(GREEN1)
+            for row in range(ROWS):
+                for col in range(row % 2, ROWS, 2):
+                    pygame.draw.rect(window, GREEN2, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
     # Crtanje figurica (GUI)
     def draw(self, window):
@@ -138,7 +141,7 @@ class Board(object):
     # Odigravanje poteza
     def insert(self, row, column, color):
 
-        new = Piece(row, column, color)
+        new = Piece(row, column, color, self._mode)
         try:
             field = self._state[row][column]
         except IndexError:

@@ -1,4 +1,4 @@
-from data_structures.MyQueue import *
+from data_structures.LimitedQueue import *
 
 
 class TreeNode(object):
@@ -41,6 +41,7 @@ class TreeNode(object):
 
     def add_child(self, node):
         self._children.append(node)
+        node.parent = self
 
     def is_root(self):
         return self._parent is None
@@ -62,10 +63,19 @@ class Tree(object):
 
     def __init__(self, root=None):
         self._root = root
+        self._current = root
 
     @property
     def root(self):
         return self._root
+
+    @property
+    def current(self):
+        return self._current
+
+    @current.setter
+    def current(self, new_current):
+        self._current = new_current
 
     @root.setter
     def root(self, node):
@@ -136,3 +146,17 @@ class Tree(object):
             if node.parent is not None:
                 print(node.parent.data, end=" ")
 
+
+if __name__ == '__main__':
+    tree = Tree(TreeNode(0))
+    for i in range(1, 5):
+        node = TreeNode("child" + str(i))
+        tree.current.add_child(node)
+
+    i = 5
+    for child in tree.root.children:
+        tree.current = child
+        tree.current.add_child(TreeNode("child's child" + str(i)))
+        i += 1
+
+    tree.preorder(print)

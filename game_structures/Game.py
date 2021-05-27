@@ -3,10 +3,11 @@ from game_structures.Board import *
 
 class Game(object):
 
-    def __init__(self, window):
+    def __init__(self, mode, window=None):
 
         self._window = window
-        self._board = Board()
+        self._mode = mode
+        self._board = Board(self._mode)
 
         self._turn = BLACK
         self._legal_moves = self._board.legal_moves
@@ -24,11 +25,16 @@ class Game(object):
     def white(self):
         return self._board.white
 
+    @property
+    def turn(self):
+        return self._turn
+
     def update(self):
         self._board.draw(self._window)
-        if self._legal_moves is not None:
-            self._display_legal_moves()
-        pygame.draw.rect(self._window, WHITE, pygame.Rect(0, 700, 700, 30))
+        if self._mode == 2:
+            if self._legal_moves is not None:
+                self._display_legal_moves()
+            pygame.draw.rect(self._window, WHITE, pygame.Rect(0, 700, 700, 30))
 
     # Prikaz svih dozvoljenih poteza za aktuelnog igrača
     def _display_legal_moves(self):
@@ -52,8 +58,12 @@ class Game(object):
         else:
             self._turn = None
             if self._board.black > self._board.white:
+                if self._mode == 1:
+                    print("BLACK WON !")
                 return "BLACK"
             elif self._board.black < self._board.white:
+                if self._mode == 1:
+                    print("WHITE WON !")
                 return "WHITE"
 
     # Change turn from black to white and vice versa
@@ -63,7 +73,7 @@ class Game(object):
         else:
             self._turn = BLACK
 
-    def play(self, row=None, column=None):
+    def play(self, row=None, column=None, depth=None, elapsed_time=None):
 
         if row is not None and column is not None:
             if self._board.insert(row, column, self._turn):
@@ -73,10 +83,25 @@ class Game(object):
                 self.console()
                 print("Black: ", self._board.black)
                 print("White: ", self._board.white)
+                if depth is not None and elapsed_time is not None:
+                    print("Depth: ", depth)
+                    print("Elapsed time: ", elapsed_time, " s")
+                if len(self._legal_moves) != 0:
+                    if self._board.playing == BLACK:
+                        print("\nBlack's turn...")
+                    else:
+                        print("\nWhite's turn...")
                 return True
 
             else:
                 return False
+
+        else:
+            print("\n\nBlack's turn...")
+            self.console()
+            print("Black: ", self._board.black)
+            print("White: ", self._board.white)
+
 
     def console(self):
         print("\n    0   1   2   3   4   5   6   7   ")

@@ -68,7 +68,7 @@ def pieces_number_heuristics(board, color):
     if this_pieces > other_pieces:
         pieces_score = (100.0 * this_pieces)/(this_pieces + other_pieces)
     elif this_pieces < other_pieces:
-        pieces_score = (100.0 * other_pieces)/(this_pieces + other_pieces)
+        pieces_score = -(100.0 * other_pieces)/(this_pieces + other_pieces)
     else:
         pieces_score = 0
 
@@ -135,22 +135,18 @@ def mobility_heuristics(this_legal, other_legal):
     return mobility_score
 
 
-def heuristics_score(board, color, this_legal, other_legal):
+def heuristics_score(board, color):
 
     board_score, front_score = board_heuristics(board, color)
     pieces_score = pieces_number_heuristics(board, color)
     corners_score, near_corner_score = corners_heuristics(board, color)
-    mobility_score = mobility_heuristics(this_legal, other_legal)
 
     return board_score + front_score + pieces_score + corners_score + near_corner_score
 
 
 def heuristics(board):
 
-    # print(board)
     color = board.playing
-    this_legal = len(board.legal_moves)
-    future_legal = board.future_legal_moves
 
-    return heuristics_score(board, color, this_legal, future_legal)
+    return heuristics_score(board, color)
 

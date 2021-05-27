@@ -1,19 +1,23 @@
-import pygame
+try:
+    import pygame
+except:
+    pass
 from constants import *
 
 
 class Piece:
 
-    def __init__(self, row, col, color):
+    def __init__(self, row, col, color, mode):
         # Pozicija figurice na tabli
         self._row = row
         self._col = col
         self._color = color
 
-        # Pozicija figurice u prozoru (GUI)
-        self._x = 0
-        self._y = 0
-        self._position()
+        if mode == 2:
+            # Pozicija figurice u prozoru (GUI)
+            self._x = 0
+            self._y = 0
+            self._position()
 
     @property
     def color(self):

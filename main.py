@@ -1,49 +1,48 @@
 from GUI import *
+from data_structures.HashMap import *
+from data_structures.GameTree import *
 
 if __name__ == '__main__':
 
     # Inicijalizacija igre
-    game = Game(WINDOW)
-    print(game.console())
-    print(game._legal_moves)
-    start = time()
 
+    mode = 0
+    print("GAME MODE: ", "\n 1 - console\n 2 - gui")
+    while mode not in ["1", "2"]:
+        mode = input("Select game mode: ")
 
-    # Kreiranje stabla igre
+    mode = int(mode)
+    if mode == 1:
+        game = Game(mode)
+        hash_map = HashMap()
 
+        game_root = TreeNode(deepcopy(game.board))
+        for legal_row, legal_column in game.board.legal_moves:
+            tmp_board = deepcopy(game.board)
+            tmp_board.insert(legal_row, legal_column, BLACK)
+            new_node = TreeNode(tmp_board)
+            game_root.add_child(new_node)
+        game_tree = Tree(game_root)
 
+        try:
+            pygame.quit()
+        except Exception:
+            pass
 
-    main_GUI(game)
+        play_console(game, hash_map, game_tree)
 
+    if mode == 2:
 
-    while True:
+        WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
-        if game._turn == BLACK:
-            row = int(input("Red: "))
-            column = int(input("Column: "))
-            moved = game.play(row, column)
-            if moved:
-                elapsed_time = time() - start
-                start = time()
-                print("Elapsed time black: ", elapsed_time)
+        game = Game(mode, WINDOW)
+        hash_map = HashMap()
 
-        winner = game.winner()
-        if winner is not None:
-            print("Winner is : ", winner)
-            break
-
-        if game._turn == WHITE:
-            row, col = ai_play(game.board, table, hash_map)
-            moved = game.play(row, col)
-            if moved:
-                elapsed_time = time() - start
-                start = time()
-                print("Elapsed time white: ", elapsed_time)
-
-                print(game._legal_moves)
-
-        winner = game.winner()
-        if winner is not None:
-            print("Winner is : ", winner)
-            break
-
+        game_root = TreeNode(deepcopy(game.board))
+        for legal_row, legal_column in game.board.legal_moves:
+            tmp_board = deepcopy(game.board)
+            tmp_board.insert(legal_row, legal_column, BLACK)
+            new_node = TreeNode(tmp_board)
+            game_root.add_child(new_node)
+        game_tree = Tree(game_root)
+        main_GUI(mode, game, hash_map, game_tree, WINDOW)
