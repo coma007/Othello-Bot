@@ -127,7 +127,7 @@ class Tree(object):
         f(node)
 
     def breadth(self, f):
-        queue = LimitedQueue(200)
+        queue = LimitedQueue(500)
         queue.enqueue(self._root)
         while not queue.is_empty():
             node = queue.dequeue()

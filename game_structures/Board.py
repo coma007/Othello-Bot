@@ -20,6 +20,9 @@ class Board(object):
         self._playing = BLACK
         self.all_legal_moves(BLACK)
 
+    def __eq__(self, other):
+        return self._state == other.state
+
     @property
     def state(self):
         return self._state
@@ -55,7 +58,6 @@ class Board(object):
             for j in range(COLUMNS):
                 if i in range(3, 5) and j in range(3, 5):
                     if i == j:
-                        color = WHITE
                         color = WHITE
                     else:
                         color = BLACK

@@ -6,18 +6,19 @@ from time import time
 
 
 def variable_depth(state, elapsed_time):
+
     oldest_children = len(state.legal_moves)
     if elapsed_time > 2.5:
         return 1
-    if oldest_children > 6:
+    if oldest_children > 8:
+        return 2
+    elif oldest_children > 5:
         return 3
-    elif oldest_children > 4:
-        return 5
     else:
-        return 7
+        return 4
 
 
-def minimax(state, depth, hash_map, current_node, elapsed_time, player=WHITE, alpha=-float(inf), beta=float(inf)):
+def minimax(state, depth, hash_map, elapsed_time, current_node, player=WHITE, alpha=-float(inf), beta=float(inf)):
 
     if depth == 0 or len(state.legal_moves) == 0:
         start = time()
@@ -52,24 +53,32 @@ def minimax(state, depth, hash_map, current_node, elapsed_time, player=WHITE, al
                 break
             tmp_board = deepcopy(state)
             tmp_board.insert(legal_row, legal_column, WHITE)
-            new_node = TreeNode(tmp_board)
             tmp_legal_moves = len(tmp_board.legal_moves)
-            if new_node not in current_node.children:
+            new_node = None
+            for child in current_node.children:
+                if tmp_board == child.data:
+                    new_node = child
+                    break
+            else:
+                new_node = TreeNode(deepcopy(tmp_board))
                 current_node.add_child(new_node)
-
-            new_depth = variable_depth(tmp_board, elapsed_time)
-            if new_depth <= depth:
-                depth = new_depth
-            new_value, new_state, future_legal_moves, new_time = minimax(tmp_board, depth - 1, hash_map, new_node, elapsed_time, BLACK, alpha, beta)
+            if (legal_row, legal_column) in [(0, 0), (0, 7), (7, 0), (7, 7)]:
+                best_move = (legal_row, legal_column)
+                break
+            # new_depth = variable_depth(tmp_board, elapsed_time)
+            # if new_depth <= depth:
+            #     depth = new_depth
+            new_value, new_state, future_legal_moves, new_time = minimax(tmp_board, depth - 1, hash_map, elapsed_time, new_node, BLACK, alpha, beta)
             elapsed_time += new_time
             if elapsed_time > 2:
                 break
+
             try:
-                value = hash_map[state.state]
+                current_value = hash_map[state.state]
             except KeyError:
-                value = heuristics(state)
-                value += mobility_heuristics(len(state.legal_moves), future_legal_moves)
-                hash_map[state.state] = value
+                current_value = heuristics(state)
+                current_value += mobility_heuristics(len(state.legal_moves), future_legal_moves)
+                hash_map[state.state] = current_value
 
             value = max(value, new_value)
             alpha = max(alpha, value)
@@ -93,26 +102,32 @@ def minimax(state, depth, hash_map, current_node, elapsed_time, player=WHITE, al
                 break
             tmp_board = deepcopy(state)
             tmp_board.insert(legal_row, legal_column, BLACK)
-            new_node = TreeNode(tmp_board)
+            # new_node = TreeNode(tmp_board)
             tmp_legal_moves = len(tmp_board.legal_moves)
-            if new_node not in current_node.children:
+            new_node = None
+            for child in current_node.children:
+                if tmp_board == child.data:
+                    new_node = child
+                    break
+            else:
+                new_node = TreeNode(deepcopy(tmp_board))
                 current_node.add_child(new_node)
 
-            new_depth = variable_depth(tmp_board, elapsed_time)
-            if new_depth < depth - 1:
-                depth = new_depth
-            new_value, new_state, future_legal_moves, new_time = minimax(tmp_board, depth - 1, hash_map, new_node, elapsed_time, WHITE, alpha, beta)
+            # new_depth = variable_depth(tmp_board, elapsed_time)
+            # if new_depth < depth - 1:
+            #     depth = new_depth
+            new_value, new_state, future_legal_moves, new_time = minimax(tmp_board, depth - 1, hash_map, elapsed_time, new_node, WHITE, alpha, beta)
 
             elapsed_time += new_time
             if elapsed_time > 2:
                 break
 
             try:
-                value = hash_map[state.state]
+                current_value = hash_map[state.state]
             except KeyError:
-                value = heuristics(state)
-                value += mobility_heuristics(len(state.legal_moves), future_legal_moves)
-                hash_map[state.state] = value
+                current_value = heuristics(state)
+                current_value += mobility_heuristics(len(state.legal_moves), future_legal_moves)
+                hash_map[state.state] = current_value
 
             value = min(value, new_value)
             beta = min(beta, value)
@@ -131,7 +146,7 @@ def ai_play(board, hash_map, current_node):
 
     elapsed_time = time() - time()
     depth = variable_depth(board, elapsed_time)
-    row, col = minimax(board, depth, hash_map, current_node, elapsed_time)[1]
+    row, col = minimax(board, depth, hash_map, elapsed_time, current_node)[1]
 
     return row, col, depth
 

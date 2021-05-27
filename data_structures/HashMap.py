@@ -1,6 +1,6 @@
 from data_structures.Array import *
 from data_structures.Map import *
-from random import randint
+from random import randint, randrange
 from constants import *
 
 
@@ -12,6 +12,10 @@ class HashMap(object):
         self._capacity = self._table.capacity
         self._init_buckets()
         self._board_values = self._init_table()
+
+        self.prime = 109345121
+        self._a = 1 + randrange(self.prime-1)
+        self._b = randrange(self.prime)
 
     def _init_table(self):
         table = []
@@ -45,7 +49,8 @@ class HashMap(object):
         return hashed
 
     def _compress_key(self, key):
-        hashed_key = self._Zobrist_hashing(key)
+        Zobrist_key = self._Zobrist_hashing(key)
+        hashed_key = (Zobrist_key*self._a + self._b) % self.prime
         return hashed_key % self._capacity
 
     def __len__(self):

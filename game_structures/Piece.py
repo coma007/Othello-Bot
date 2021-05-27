@@ -19,9 +19,22 @@ class Piece:
             self._y = 0
             self._position()
 
+    def __eq__(self, other):
+        if not isinstance(other, Piece):
+            return False
+        return self._color == other.color and (self._row, self._col) == (other.row, other.col)
+
     @property
     def color(self):
         return self._color
+
+    @property
+    def row(self):
+        return self._row
+
+    @property
+    def col(self):
+        return self._col
 
     @color.setter
     def color(self, new_color):

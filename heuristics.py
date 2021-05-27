@@ -72,7 +72,7 @@ def pieces_number_heuristics(board, color):
     else:
         pieces_score = 0
 
-    pieces_score *= 10
+    pieces_score *= 100
 
     return pieces_score
 

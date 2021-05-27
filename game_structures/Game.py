@@ -11,6 +11,7 @@ class Game(object):
 
         self._turn = BLACK
         self._legal_moves = self._board.legal_moves
+
         self.play()
 
     @property
@@ -28,6 +29,14 @@ class Game(object):
     @property
     def turn(self):
         return self._turn
+
+    @property
+    def window(self):
+        return self._window
+
+    @window.setter
+    def window(self, new_window):
+        self._window = new_window
 
     def update(self):
         self._board.draw(self._window)
@@ -61,6 +70,10 @@ class Game(object):
                 if self._mode == 1:
                     print("BLACK WON !")
                 return "BLACK"
+            elif self._board.black == self._board.white:
+                if self._mode == 1:
+                    print("TIE !")
+                return "TIE"
             elif self._board.black < self._board.white:
                 if self._mode == 1:
                     print("WHITE WON !")
