@@ -1,8 +1,21 @@
-class MapItem(object):
+"""
+Implementacija strukture podataka mapa i element mape.
+"""
 
-    __slots__ = '_key', '_value'
+
+class MapItem(object):
+    """
+    Klasa MapItem modeluje jedan element iz mape.
+    """
 
     def __init__(self, key, value):
+        """
+        Konstruktor klase MapItem.
+
+        :param key: Ključ.
+        :param value: Vrijednost.
+        """
+
         self._key = key
         self._value = value
 
@@ -27,7 +40,14 @@ class MapItem(object):
 
 class Map(object):
 
+    """
+    Klasa Map modeluje mapu.
+    """
+
     def __init__(self):
+        """
+        Konstruktor klase Map.
+        """
         self._data = []
 
     def __len__(self):
@@ -36,22 +56,6 @@ class Map(object):
     def __iter__(self):
         for item in self._data:
             yield item.key
-
-    def items(self):
-        for item in self._data:
-            yield item.key, item.value
-
-    def keys(self):
-        keys = []
-        for item in self._data:
-            keys.append(item.key)
-        return keys
-
-    def values(self):
-        values = []
-        for item in self._data:
-            values.append(item.value)
-        return values
 
     def __getitem__(self, key):
         for item in self._data:
@@ -84,6 +88,46 @@ class Map(object):
         else:
             raise KeyError("Key does not exist !")
 
+    def items(self):
+        """
+        Metoda za iteriranje elementima mape.
+
+        :return: Uređen par (ključ, vrijednost).
+        """
+
+        for item in self._data:
+            yield item.key, item.value
+
+    def keys(self):
+        """
+        Metoda za dobijanje svih ključeva iz mape.
+
+        :return: Lista svih ključeva.
+        :rtype: list
+        """
+
+        keys = []
+        for item in self._data:
+            keys.append(item.key)
+        return keys
+
+    def values(self):
+        """
+        Metoda za dobijanje svih vrijednosti iz mape.
+
+        :return: Lista svih vrijednosti.
+        :rtype: list
+        """
+
+        values = []
+        for item in self._data:
+            values.append(item.value)
+        return values
+
     def clear(self):
+        """
+        Metoda za brisanje svih elemenata iz mape.
+        """
+
         self._data = []
 

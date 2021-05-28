@@ -1,13 +1,91 @@
+"""
+Modul sa funkcijama za računanje heuristike.
+"""
+
 from game_structures.Game import *
 
 
+def calculate_heuristics(board):
+    """
+    Funkcija za računanje heuristike na osnovu trenutnog sadržaja table.
+
+    :param board: Trenutni izgled table.
+    :type board: game_structures.Board.Board
+
+    :return: Heuristička vrijednost.
+    :rtype: float
+    """
+
+    color = board.playing
+
+    return heuristics_score(board, color)
+
+
+def heuristics_score(board, color):
+    """
+    Pomoćna funkcija za računanje heuristike.
+
+    :param board: Trenutni izgled table.
+    :type board: game_structures.Board.Board
+    :param color: Igrač na potezu.
+    :type color: tuple[int,int,int]
+
+    :return: Heuristička vrijednost.
+    :rtype: float
+    """
+
+    board_total_score = board_heuristics(board, color)
+    pieces_score = pieces_number_heuristics(board, color)
+    corners_total_score = corners_heuristics(board, color)
+
+    return board_total_score + pieces_score + corners_total_score
+
+
+def mobility_heuristics(this_legal, other_legal):
+    """
+    Pomoćna funkcija za računanje heurističke vrijednosti na osnovu mobilnosti jednog igrača u odnosu na drugog.
+    i broja susjednih figurica.
+
+    :param this_legal: Broj legalnih poteza igrača na potezu.
+    :type this_legal: int
+    :param other_legal: Broj legalnih poteza drugog igrača nakon odigranog poteza.
+    :type other_legal: int
+
+    :return: Heuristička vrijednost.
+    :rtype: float
+    """
+
+    if this_legal > other_legal:
+        mobility_score = (100.0 * this_legal)/(this_legal + other_legal)
+    elif this_legal < other_legal:
+        mobility_score = -(100.0 * this_legal)/(this_legal + other_legal)
+    else:
+        mobility_score = 0
+
+    mobility_score *= 78.922
+
+    return mobility_score
+
+
 def board_heuristics(board, color):
+    """
+    Pomoćna funkcija za računanje heurističke vrijednosti na osnovu položaja figurica na tabli.
+    i broja susjednih figurica.
+
+    :param board: Trenutni izgled table.
+    :type board: game_structures.Board.Board
+    :param color: Igrač na potezu.
+    :type color: tuple[int,int,int]
+
+    :return: Heuristička vrijednost.
+    :rtype: float
+    """
 
     row1 = [20, -3, 11,  8,  8, 11, -3, 20]
     row2 = [-3, -7, -4,  1,  1, -4, -7, -3]
     row3 = [11, -4,  2,  2,  2,  2, -4, 11]
-    row4 = [ 8,  1,  2, -3, -3,  2,  1,  8]
-    row5 = [ 8,  1,  2, -3, -3,  2,  1,  8]
+    row4 = [+8,  1,  2, -3, -3,  2,  1,  8]
+    row5 = [+8,  1,  2, -3, -3,  2,  1,  8]
     row6 = [11, -4,  2,  2,  2,  2, -4, 11]
     row7 = [-3, -7, -4,  1,  1, -4, -7, -3]
     row8 = [20, -3, 11,  8,  8, 11, -3, 20]
@@ -21,17 +99,14 @@ def board_heuristics(board, color):
     other_front = 0
 
     tokens = board.state
-
     for row in range(ROWS):
         for col in range(COLUMNS):
             token = tokens[row][col]
             if token != 0:
-                # skor na osnovu pozicije figurica
                 if token.color == color:
                     board_score += heuristics[row][col]
                 else:
                     board_score -= heuristics[row][col]
-                # skor na osnovu figurica u frontalnoj poziciji
                 for k in range(ROWS):
                     x = row + front_row[k]
                     y = col + front_col[k]
@@ -48,20 +123,31 @@ def board_heuristics(board, color):
     else:
         front_score = 0
 
-    board_score *= 10
+    board_score *= 5
     front_score *= 74.396
 
-    return board_score, front_score
+    return board_score + front_score
 
 
 def pieces_number_heuristics(board, color):
+    """
+    Pomoćna funkcija za računanje heurističke vrijednosti na osnovu broja figurica na tabli.
+    i broja susjednih figurica.
+
+    :param board: Trenutni izgled table.
+    :type board: game_structures.Board.Board
+    :param color: Igrač na potezu.
+    :type color: tuple[int,int,int]
+
+    :return: Heuristička vrijednost.
+    :rtype: float
+    """
 
     black = board.black
     white = board.white
 
     this_pieces = black
     other_pieces = white
-
     if color == WHITE:
         this_pieces, other_pieces = other_pieces, this_pieces
 
@@ -72,12 +158,24 @@ def pieces_number_heuristics(board, color):
     else:
         pieces_score = 0
 
-    pieces_score *= 100
+    pieces_score *= 500
 
     return pieces_score
 
 
 def corners_heuristics(board, color):
+    """
+    Pomoćna funkcija za računanje heurističke vrijednosti na osnovu položaja figurica na tabli u odnosu na uglove table.
+    i broja susjednih figurica.
+
+    :param board: Trenutni izgled table.
+    :type board: game_structures.Board.Board
+    :param color: Igrač na potezu.
+    :type color: tuple[int,int,int]
+
+    :return: Heuristička vrijednost.
+    :rtype: float
+    """
 
     tokens = board.state
     corners_score = 0
@@ -102,7 +200,6 @@ def corners_heuristics(board, color):
                             near_corner_score += 1
                         else:
                             near_corner_score -= 1
-
                 k = 1
                 m = 1
                 if i == 7:
@@ -118,35 +215,4 @@ def corners_heuristics(board, color):
     corners_score *= 801.724 * 25
     near_corner_score *= -12.5 * 382.026
 
-    return corners_score, near_corner_score
-
-
-def mobility_heuristics(this_legal, other_legal):
-
-    if this_legal > other_legal:
-        mobility_score = (100.0 * this_legal)/(this_legal + other_legal)
-    elif this_legal < other_legal:
-        mobility_score = -(100.0 * this_legal)/(this_legal + other_legal)
-    else:
-        mobility_score = 0
-
-    mobility_score *= 78.922
-
-    return mobility_score
-
-
-def heuristics_score(board, color):
-
-    board_score, front_score = board_heuristics(board, color)
-    pieces_score = pieces_number_heuristics(board, color)
-    corners_score, near_corner_score = corners_heuristics(board, color)
-
-    return board_score + front_score + pieces_score + corners_score + near_corner_score
-
-
-def heuristics(board):
-
-    color = board.playing
-
-    return heuristics_score(board, color)
-
+    return corners_score + near_corner_score

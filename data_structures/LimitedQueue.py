@@ -1,3 +1,8 @@
+"""
+Implementacija strukture podataka red.
+"""
+
+
 class EmptyQueueException(Exception):
     pass
 
@@ -7,8 +12,18 @@ class FullQueueException(Exception):
 
 
 class LimitedQueue(object):
+    """
+    Klasa LimitedQueue modeluje red.
+    """
 
     def __init__(self, default_capacity):
+        """
+        Konstruktor klase LimitedQueue.
+
+        :param default_capacity: Podrazumijevani kapacitet
+        :type default_capacity: int
+        """
+
         self._front = 0
         self._rear = 0
         self._size = 0
@@ -34,18 +49,42 @@ class LimitedQueue(object):
             raise EmptyQueueException("Empty queue.")
 
     def show_queue(self):
+        """
+        Metoda za ispis svih elemenata reda.
+        """
+
         for i in range(self._capacity):
             print((i-self._front) % self._capacity, ".", self._queue[i], end="\t")
 
     def is_empty(self):
+        """
+        Metoda koja provjerava da li je red prazan.
+
+        :return: True ako je prazno, u suprotnom False.
+        :rtype: bool
+        """
+
         return self._size == 0
 
     def get_frist(self):
+        """
+        Metoda koja vraća prvi element reda.
+
+        :raises EmptyQueueException: Ukoliko je red prazan.
+        """
+
         if self.is_empty():
             raise EmptyQueueException("Empty queue !")
         return self._queue[self._front]
 
     def enqueue(self, elem):
+        """
+        Metoda koja dodaje novi element u red.
+
+        :param elem: Novi element.
+        :raises FullQueueException: Ukoliko je red pun.
+        """
+
         if self._rear == self._capacity:
             for index in range(self._front):
                 if self._queue[index] is None:
@@ -60,29 +99,15 @@ class LimitedQueue(object):
             raise FullQueueException("Full queue !")
 
     def dequeue(self):
+        """
+        Metoda koja element na redu izbacuje iz reda.
+
+        :return: Izbačen element.
+        """
+
         tmp = self._queue[self._front]
         self._queue[self._front] = None
         self._front = (self._front + 1) % self._capacity
         self._size -= 1
         return tmp
-
-
-if __name__ == '__main__':
-
-    queue = LimitedQueue(5)
-    queue.enqueue("Mika") # 0
-    queue.enqueue("Zika") # 1
-    queue.enqueue("Tika") # 2
-    queue.enqueue("Ika")  # 3
-    print("Queue: ", queue)
-    queue.dequeue() # Zika 0 Tika 1 Ika 2
-    print("Queue after first dequeue: ", queue)
-    queue.enqueue("Kika") # 3
-    queue.enqueue("Vika") # 4
-    print("Queue after two enqueues: ", queue)
-    print("Real configuration of queue: ", end=" ")
-    queue.show_queue()
-    # queue.enqueue("Fika") -> baca exception
-
-
 

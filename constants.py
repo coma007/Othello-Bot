@@ -1,3 +1,7 @@
+"""
+Modul sa konstantama često korištenim u ostatku projekta.
+"""
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN1 = (0, 175, 0)
