@@ -1,5 +1,5 @@
 """
-Modul sa klasom Game.
+Module with the Game class.
 """
 
 from game_structures.Board import *
@@ -7,16 +7,16 @@ from game_structures.Board import *
 
 class Game(object):
     """
-    Klasa Game modeluje cjelinu igre.
+    The Game class models the entirety of the game.
     """
 
     def __init__(self, mode, window=None):
         """
-        Konstruktor klase Game.
+        Constructor of the Game class.
 
-        :param mode: Režim igranja.
+        :param mode: Game mode.
         :type mode: int
-        :param window: Prozor.
+        :param window: Window.
         :type window: pygame.Surface
         """
 
@@ -58,7 +58,7 @@ class Game(object):
 
     def update(self):
         """
-        Metoda za osvježavanje igre.
+        Method to refresh the game.
         """
 
         self._board.draw(self._window)
@@ -69,7 +69,7 @@ class Game(object):
 
     def _display_legal_moves(self):
         """
-        Privatna metoda koja se koristi u GUI režimu kako bi se u prozoru iscrtali svi mogući potezi.
+        Private method used in GUI mode to draw all possible moves in the window.
         """
 
         for move in self._legal_moves:
@@ -82,9 +82,9 @@ class Game(object):
 
     def game_on(self):
         """
-        Metoda koja provjerava da li je igra gotova.
+        Method to check if the game is ongoing.
 
-        :return: False ukoliko je igra gotova, u suprotnom True.
+        :return: False if the game is over, True otherwise.
         :rtype: bool
         """
 
@@ -92,9 +92,9 @@ class Game(object):
 
     def winner(self):
         """
-        Metoda koja vraća trenutni ishod igre.
+        Method to return the current outcome of the game.
 
-        :return: None ukoliko igra nije završena, u suprotnom pobjednika.
+        :return: None if the game is not finished, otherwise the winner.
         :rtype: NoneType, str
         """
 
@@ -104,20 +104,20 @@ class Game(object):
             self._turn = None
             if self._board.black > self._board.white:
                 if self._mode == 1:
-                    print("BLACK WON !")
+                    print("BLACK WON!")
                 return "BLACK"
             elif self._board.black == self._board.white:
                 if self._mode == 1:
-                    print("TIE !")
+                    print("TIE!")
                 return "TIE"
             elif self._board.black < self._board.white:
                 if self._mode == 1:
-                    print("WHITE WON !")
+                    print("WHITE WON!")
                 return "WHITE"
 
     def _change_turn(self):
         """
-        Privatna metoda kojom se mijenja potez.
+        Private method to change the turn.
         """
 
         if self._turn == BLACK:
@@ -127,18 +127,18 @@ class Game(object):
 
     def play(self, row=None, column=None, depth=None, elapsed_time=None):
         """
-        Metoda koja odigra zadani potez.
+        Method to make the specified move.
 
-        :param row: Red.
+        :param row: Row.
         :type row: int
-        :param column: Kolona.
+        :param column: Column.
         :type column: int
-        :param depth: Dubina na kojoj se računao najbolji potez ukoliko je na potezu bot_logic.
+        :param depth: Depth at which the best move was calculated if bot_logic is taking its turn.
         :type depth: int
-        :param elapsed_time: Trajanje poteza.
+        :param elapsed_time: Duration of the move.
         :type elapsed_time: float
 
-        :return: True ukoliko je potez odigran, u suprotnom False.
+        :return: True if the move is made, False otherwise.
         :rtype: bool
         """
 
@@ -147,11 +147,11 @@ class Game(object):
                 self._change_turn()
                 self._legal_moves = self._board.legal_moves
                 self.console()
-                print("Black: ", self._board.black)
-                print("White: ", self._board.white)
+                print("Black:", self._board.black)
+                print("White:", self._board.white)
                 if depth is not None and elapsed_time is not None:
-                    print("Depth: ", depth)
-                    print("Elapsed time: ", elapsed_time, "s")
+                    print("Depth:", depth)
+                    print("Elapsed time:", elapsed_time, "s")
                 if len(self._legal_moves) != 0:
                     if self._board.playing == BLACK:
                         print("\nBlack's turn...")
@@ -163,13 +163,13 @@ class Game(object):
         else:
             print("\n\nBlack's turn...")
             self.console()
-            print("Black: ", self._board.black)
-            print("White: ", self._board.white)
+            print("Black:", self._board.black)
+            print("White:", self._board.white)
             return True
 
     def console(self):
         """
-        Metoda koja u konzoli ispisuje trenutno stanje igre.
+        Method to print the current state of the game to the console.
         """
 
         print("\n    0   1   2   3   4   5   6   7   ")

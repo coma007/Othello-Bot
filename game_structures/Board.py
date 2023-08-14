@@ -1,5 +1,5 @@
 """
-Modul sa klasom Board.
+Module with the Board class.
 """
 
 from game_structures.Piece import *
@@ -7,16 +7,16 @@ from game_structures.Piece import *
 
 class Board(object):
     """
-    Klasa Board modeluje trenutno stanje table.
+    Class Board models the current state of the board.
     """
 
     def __init__(self, mode, state=None):
         """
-        Konstruktor klase Board.
+        Constructor of the Board class.
 
-        :param mode: Režim igranja.
+        :param mode: Game mode.
         :type mode: int
-        :param state: Stanje na tabli.
+        :param state: State on the board.
         :type state: list
         """
 
@@ -83,7 +83,7 @@ class Board(object):
 
     def _create_pieces(self):
         """
-        Privatna metoda koja kreira inicijalno stanje na tabli.
+        Private method that creates the initial state of the board.
         """
 
         for i in range(ROWS):
@@ -100,9 +100,9 @@ class Board(object):
 
     def _draw_fields(self, window):
         """
-        Privatna metoda koja se koristi u GUI režimu kako bi se u prozoru iscrtala sva polja na tabli.
+        Private method used in GUI mode to draw all the squares on the board.
 
-        :param window: Prozor.
+        :param window: Window.
         :type window: pygame.Surface
         """
 
@@ -114,9 +114,9 @@ class Board(object):
 
     def draw(self, window):
         """
-        Metoda koja se koristi u GUI režimu kako bi se u prozoru iscrtale sve figurice.
+        Method used in GUI mode to draw all the pieces on the board.
 
-        :param window: Prozor.
+        :param window: Window.
         :type window: pygame.Surface
         """
 
@@ -129,9 +129,9 @@ class Board(object):
 
     def all_legal_moves(self, color):
         """
-        Metoda koja računa sve legalne poteze za trenutno stanje table.
+        Method that calculates all legal moves for the current state of the board.
 
-        :param color: Boja igrača za koga se traže legalni potezi.
+        :param color: Color of the player for whom to find legal moves.
         :type color: tuple[int, int, int]
         """
 
@@ -147,16 +147,16 @@ class Board(object):
 
     def _legal_directions(self, row, column, color):
         """
-        Privatna metoda koja računa sve legalne poteze za trenutno stanje table u svim smjerovima.
+        Private method that calculates all legal moves for the current state of the board in all directions.
 
-        :param row: Red.
+        :param row: Row.
         :type row: int
-        :param column: Kolona.
+        :param column: Column.
         :type column: int
-        :param color: Boja igrača za koga se traže legalni potezi.
+        :param color: Color of the player for whom to find legal moves.
         :type color: tuple[int, int, int]
 
-        :return: True ako je moguće odigrati potez na datom polju, u suprotnom False.
+        :return: True if a move can be played on the given square, False otherwise.
         :rtype: bool
         """
 
@@ -174,20 +174,20 @@ class Board(object):
 
     def _legal_one_direction(self, y, dy, x, dx, color):
         """
-        Privatna metoda koja računa sve legalne poteze za trenutno stanje table u pojedinačnom smjeru.
+        Private method that calculates all legal moves for the current state of the board in a single direction.
 
-        :param y: Horizontalna pozicija.
+        :param y: Horizontal position.
         :type y: int
-        :param dy: Pomak po horizontali.
+        :param dy: Horizontal shift.
         :type dy: int
-        :param x: Horizontalna pozicija.
+        :param x: Vertical position.
         :type x: int
-        :param dx: Pomak po horizontali.
+        :param dx: Vertical shift.
         :type dx: int
-        :param color: Boja igrača za koga se traže legalni potezi.
+        :param color: Color of the player for whom to find legal moves.
         :type color: tuple[int, int, int]
 
-        :return: True ako je moguće odigrati potez u datom smjeru, u suprotnom False.
+        :return: True if a move can be played in the given direction, False otherwise.
         :rtype: bool
         """
 
@@ -202,20 +202,20 @@ class Board(object):
 
     def _encapsulating_opponent(self, y, dy, x, dx, color):
         """
-        Privatna metoda koja provjerava da li je protivnik enkapsuliran odigranim potezom.
+        Private method that checks if the opponent is encapsulated by a move.
 
-        :param y: Horizontalna pozicija.
+        :param y: Horizontal position.
         :type y: int
-        :param dy: Pomak po horizontali.
+        :param dy: Horizontal shift.
         :type dy: int
-        :param x: Horizontalna pozicija.
+        :param x: Vertical position.
         :type x: int
-        :param dx: Pomak po horizontali.
+        :param dx: Vertical shift.
         :type dx: int
-        :param color: Boja igrača za koga se traže legalni potezi.
+        :param color: Color of the player for whom to find legal moves.
         :type color: tuple[int, int, int]
 
-        :return: True ako se protivnik enkapsulira, u suprotnom False.
+        :return: True if the opponent is encapsulated, False otherwise.
         :rtype: bool
         """
 
@@ -232,14 +232,14 @@ class Board(object):
 
     def _on_edge(self, a, da):
         """
-        Privatna metoda koja provjerava da li je pozicija blizu ivica table.
+        Private method that checks if a position is near the edges of the board.
 
-        :param a: Pozicija.
+        :param a: Position.
         :type a: int
-        :param da: Pomak.
+        :param da: Shift.
         :type da: int
 
-        :return: True ako je pozicija blizu ivice table, u suprotnom False.
+        :return: True if the position is near the board edge, False otherwise.
         :rtype: bool
         """
 
@@ -247,17 +247,17 @@ class Board(object):
 
     def insert(self, row, column, color):
         """
-        Metoda kojom se u trenutno stanje ubacuje nova figurica. Ukoliko je ubacivanje figurice uspješno, potez će biti
-        odigran, u suprotnom neće.
+        Method for inserting a new piece into the current state. If the insertion is successful, the move will be
+        played; otherwise, it won't.
 
-        :param row: Red.
+        :param row: Row.
         :type row: int
-        :param column: Kolona.
+        :param column: Column.
         :type column: int
-        :param color: Boja igrača za koga se traže legalni potezi.
+        :param color: Color of the player for whom to find legal moves.
         :type color: tuple[int, int, int]
 
-        :return: True ako je potez odigran, u suprotnom False.
+        :return: True if the move was played, False otherwise.
         :rtype: bool
         """
 
@@ -282,13 +282,13 @@ class Board(object):
 
     def _flip_opponent(self, row, column, color):
         """
-        Privatna metoda kojom se enkapsulirane protivničke figurice nakon odigranog poteza prevrću u svim smjerovima.
+        Private method for flipping opponent's pieces after a move is played.
 
-        :param row: Red.
+        :param row: Row.
         :type row: int
-        :param column: Kolona.
+        :param column: Column.
         :type column: int
-        :param color: Boja igrača za koga se traže legalni potezi.
+        :param color: Color of the player for whom to find legal moves.
         :type color: tuple[int, int, int]
         """
 
@@ -303,20 +303,20 @@ class Board(object):
 
     def _flip_opponent_line(self, y, dy, x, dx, color):
         """
-        Privatna metoda kojom se enkapsulirane protivničke figurice nakon odigranog poteza prevrću u jednom smjeru.
+        Private method for flipping opponent's pieces in a single direction after a move is played.
 
-        :param y: Horizontalna pozicija.
+        :param y: Horizontal position.
         :type y: int
-        :param dy: Pomak po horizontali.
+        :param dy: Horizontal shift.
         :type dy: int
-        :param x: Horizontalna pozicija.
+        :param x: Vertical position.
         :type x: int
-        :param dx: Pomak po horizontali.
+        :param dx: Vertical shift.
         :type dx: int
-        :param color: Boja igrača za koga se traže legalni potezi.
+        :param color: Color of the player for whom to find legal moves.
         :type color: tuple[int, int, int]
 
-        :return: True ako su se protivničke figurice prevrnule, u suprotnom False.
+        :return: True if opponent's pieces were flipped, False otherwise.
         :rtype: bool
         """
 

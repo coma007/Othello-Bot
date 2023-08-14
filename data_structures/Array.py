@@ -1,16 +1,16 @@
 """
-Implementacija strukture podataka niz.
+Implementation of the data structure Dynamic Array.
 """
 
 
 def _prepare_locations(capacity):
     """
-    Statička metoda koja priprema memorijske lokacije neophodne za obrazovanje niza.
+    Static method that prepares memory locations necessary for creating a dynamic array.
 
-    :param capacity: Kapacitet niza.
+    :param capacity: Capacity of the array.
     :type capacity: int
 
-    :return: Pripremljene memorijske lokacije za niz.
+    :return: Prepared memory locations for the array.
     :rtype: _ctypes.PyCArrayType
     """
 
@@ -20,14 +20,14 @@ def _prepare_locations(capacity):
 
 class DynamicArray(object):
     """
-    Klasa DynamicArray modeluje dinamički niz.
+    Class DynamicArray models a dynamic array.
     """
 
     def __init__(self, default_capacity=None):
         """
-        Konsturktor klase DynamicArray.
+        Constructor of the DynamicArray class.
 
-        :param default_capacity: Podrazumijevani kapacitet.
+        :param default_capacity: Default capacity.
         :type default_capacity: int.
         """
 
@@ -62,9 +62,9 @@ class DynamicArray(object):
 
     def append(self, elem):
         """
-        Metoda za dodavanje novog elementa na kraj niza.
+        Method to add a new element to the end of the array.
 
-        :param elem: Novi element.
+        :param elem: New element.
         """
 
         if self._nelem == self._capacity:
@@ -74,10 +74,10 @@ class DynamicArray(object):
 
     def insert_at(self, index, elem):
         """
-        Metoda za dodavanje novog elementa u niz na određenu poziciju.
+        Method to add a new element to the array at a specific position.
 
-        :param index: Pozicija.
-        :param elem: Novi element.
+        :param index: Position.
+        :param elem: New element.
         """
 
         if not 0 <= index < self._nelem:
@@ -91,9 +91,9 @@ class DynamicArray(object):
 
     def insert_first(self, elem):
         """
-        Metoda za dodavanje novog elementa na početak niza.
+        Method to add a new element to the beginning of the array.
 
-        :param elem: Novi element.
+        :param elem: New element.
         """
 
         if self._nelem == 0:
@@ -103,7 +103,7 @@ class DynamicArray(object):
 
     def pop(self):
         """
-        Metoda za uklanjanje elementa sa kraja niza.
+        Method to remove an element from the end of the array.
         """
 
         if 0 == self._nelem:
@@ -115,9 +115,9 @@ class DynamicArray(object):
 
     def remove_at(self, index):
         """
-        Metoda za uklanjanje elementa iz niza sa određene pozicije.
+        Method to remove an element from the array at a specific position.
 
-        :param index: Novi element.
+        :param index: Index of the element to be removed.
         """
 
         if not 0 <= index < self._nelem:
@@ -127,7 +127,7 @@ class DynamicArray(object):
 
     def remove_first(self):
         """
-        Metoda za uklanjanje prvog elementa niza.
+        Method to remove the first element from the array.
         """
 
         if self._nelem == 0:
@@ -137,9 +137,9 @@ class DynamicArray(object):
 
     def _resize(self, new_capacity):
         """
-        Privatna metoda za povećanje kapaciteta niza.
+        Private method to resize the capacity of the array.
 
-        :param new_capacity: Novi kapacitet.
+        :param new_capacity: New capacity.
         """
 
         new_array = _prepare_locations(new_capacity)

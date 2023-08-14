@@ -1,5 +1,5 @@
 """
-Modul sa osnovnim funkcijama vezanim za igru bot_logic-a.
+Module containing basic functions related to the bot_logic of the game.
 """
 
 from bot_logic.heuristics import *
@@ -11,17 +11,17 @@ from time import time
 
 def bot_play(board, hash_map, current_node):
     """
-    Glavna funkcija za odigravanje poteza bot_logic-a, tj. bijelog igrača.
+    Main function for the bot_logic to make a move, i.e., for the white player.
 
-    :param board: Trenutno stanje na tabli..
+    :param board: Current state of the board.
     :type board: game_structures.Board.Board
-    :param hash_map: Heš mapa.
+    :param hash_map: Hash map.
     :type hash_map: data_structures.HashMap.HashMap
-    :param current_node: Trenutni čvor stabla.
+    :param current_node: Current node of the tree.
     :type current_node: data_structures.GameTree.TreeNode
 
-    :return: Red i kolonu polja na kome će se odigrati potez i dubinu na kojoj je izvršena pretraga najboljeg poteza.
-    :rtype: tuple[int,int,int]
+    :return: Row and column of the field where the move will be played and the depth at which the search for the best move is executed.
+    :rtype: tuple[int, int, int]
     """
 
     elapsed_time = 0
@@ -33,14 +33,14 @@ def bot_play(board, hash_map, current_node):
 
 def variable_depth(state, elapsed_time):
     """
-    Pomoćna funkcija koja evaluira dubinu u odnosu na trenutno stanje nad kojim se vrši minimax algoritam.
+    Helper function that evaluates the depth relative to the current state for the minimax algorithm.
 
-    :param state: Trenutno stanje na tabli.
+    :param state: Current state of the board.
     :type state: game_structures.Board.Board
-    :param elapsed_time: Proteklo vrijeme od početka poteza.
+    :param elapsed_time: Elapsed time since the start of the move.
     :type elapsed_time: float
 
-    :return: Dubina.
+    :return: Depth.
     :rtype: int
     """
 
@@ -57,28 +57,28 @@ def variable_depth(state, elapsed_time):
 
 def minimax(state, depth, hash_map, current_node, elapsed_time, player=WHITE, alpha=-float(inf), beta=float(inf)):
     """
-    Minimax algoritam sa alfa-beta rezom.
-    bot_logic je bijeli igrač, dakle u ovom slučaju je bijeli igrač Maximizer, a crni Minimizer.
+    Minimax algorithm with alpha-beta pruning.
+    bot_logic is the white player, so in this case, the white player is the Maximizer, and the black player is the Minimizer.
 
-    :param state: Trenutno stanje na tabli.
+    :param state: Current state of the board.
     :type state: game_structures.Board.Board
-    :param depth: Dubina.
+    :param depth: Depth.
     :type depth: int
-    :param hash_map: Heš mapa.
+    :param hash_map: Hash map.
     :type hash_map: data_structures.HashMap.HashMap
-    :param current_node: Trenutni čvor stabla.
+    :param current_node: Current node of the tree.
     :type current_node: data_structures.GameTree.TreeNode
-    :param elapsed_time: Proteklo vrijeme od početka poteza.
+    :param elapsed_time: Elapsed time since the start of the move.
     :type elapsed_time: float
-    :param player: Igrač na potezu.
-    :type player: tuple[int,int,int]
-    :param alpha: Minimalan rezultat koji može da se dobije.
+    :param player: Player making the move.
+    :type player: tuple[int, int, int]
+    :param alpha: The minimum value that can be achieved.
     :type alpha: float
-    :param beta: Maksimalan rezultat koji može da se dobije.
+    :param beta: The maximum value that can be achieved.
     :type beta: float
 
-    :return: Heurističku vrijednost, najbolji potez, broj mogućih poteza.
-    :rtype: tuple[int,tuple[int,int],int]
+    :return: Heuristic value, best move, number of possible moves.
+    :rtype: tuple[int, tuple[int, int], int]
     """
 
     if depth == 0 or len(state.legal_moves) == 0:

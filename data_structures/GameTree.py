@@ -1,5 +1,5 @@
 """
-Implementacija strukture podataka stablo i pojedinačnih čvorova stabla.
+Implementation of the data structure Tree and individual tree nodes.
 """
 
 from data_structures.LimitedQueue import *
@@ -7,17 +7,17 @@ from data_structures.LimitedQueue import *
 
 class TreeNode(object):
     """
-    Klasa TreeNode modeluje čvor stabla.
+    Class TreeNode models a tree node.
     """
 
     def __init__(self, data, parent=None, children=None):
         """
-        Konstruktor klase TreeNode.
+        Constructor of the TreeNode class.
 
-        :param data: Podaci u čvoru.
-        :param parent: Roditelj čvora.
+        :param data: Data in the node.
+        :param parent: Parent node.
         :type parent: data_structures.GameTree.TreeNode
-        :param children: Djeca čvora.
+        :param children: Children nodes.
         :type children: list
         """
 
@@ -59,21 +59,21 @@ class TreeNode(object):
     def data(self, new_data):
         self._data = new_data
 
-    def remove_child(self, sad_child):
+    def remove_child(self, child_to_remove):
         """
-        Metoda za brisanje jednog djeteta čvora.
+        Method to remove a child node.
 
-        :param sad_child: Dijete koje se briše.
-        :type sad_child: data_structures.GameTree.TreeNode
+        :param child_to_remove: Child to be removed.
+        :type child_to_remove: data_structures.GameTree.TreeNode
         """
 
-        self._children.remove(sad_child)
+        self._children.remove(child_to_remove)
 
     def add_child(self, new_child):
         """
-        Metoda za dodavanje jednog djeteta čvora.
+        Method to add a child node.
 
-        :param new_child: Dijete koje se dodaje.
+        :param new_child: Child to be added.
         :type new_child: data_structures.GameTree.TreeNode
         """
 
@@ -82,9 +82,9 @@ class TreeNode(object):
 
     def is_root(self):
         """
-        Metoda koja provjerava da li je čvor korijenski.
+        Method that checks if the node is the root.
 
-        :return: True ako je korijen, u suprotnom False.
+        :return: True if it is the root, otherwise False.
         :rtype: bool
         """
 
@@ -92,9 +92,9 @@ class TreeNode(object):
 
     def is_leaf(self):
         """
-        Metoda koja provjerava da li je čvor lisni.
+        Method that checks if the node is a leaf.
 
-        :return: True ako je list, u suprotnom False.
+        :return: True if it is a leaf, otherwise False.
         :rtype: bool
         """
 
@@ -102,9 +102,9 @@ class TreeNode(object):
 
     def num_children(self):
         """
-        Metoda koja računa broj djece čvora.
+        Method that calculates the number of children of the node.
 
-        :return: Broj djece.
+        :return: Number of children.
         :rtype: int
         """
 
@@ -113,14 +113,14 @@ class TreeNode(object):
 
 class Tree(object):
     """
-    Klasa Tree modeluje stablo.
+    Class Tree models a tree.
     """
 
     def __init__(self, root=None):
         """
-        Konstruktor klase Tree.
+        Constructor of the Tree class.
 
-        :param root: Roditelj stabla.
+        :param root: Root node of the tree.
         :type root: data_structures.GameTree.TreeNode
         """
 
@@ -145,9 +145,9 @@ class Tree(object):
 
     def is_empty(self):
         """
-        Metoda koja provjerava da li je stablo prazno.
+        Method that checks if the tree is empty.
 
-        :return: True ako je prazno, u suprotnom False.
+        :return: True if empty, otherwise False.
         :rtype: bool
         """
 
@@ -155,11 +155,11 @@ class Tree(object):
 
     def replace(self, old_node, new_node):
         """
-        Metoda koja zamjenjuje određeni čvor novim čvorom.
+        Method that replaces a specific node with a new node.
 
-        :param old_node: Čvor koji se zamjenjuje.
+        :param old_node: Node to be replaced.
         :type old_node: data_structures.GameTree.TreeNode
-        :param new_node: Novi čvor.
+        :param new_node: New node.
         :type new_node: data_structures.GameTree.TreeNode
         """
 
@@ -174,12 +174,12 @@ class Tree(object):
 
     def depth(self, node):
         """
-        Rekurzivna metoda koja računa dubinu određenog čvora.
+        Recursive method that calculates the depth of a specific node.
 
-        :param node: Čvor čija se dubina računa.
+        :param node: Node whose depth is calculated.
         :type node: data_structures.GameTree.TreeNode
 
-        :return: Dubina čvora.
+        :return: Depth of the node.
         :rtype: int
         """
 
@@ -190,9 +190,9 @@ class Tree(object):
 
     def height(self):
         """
-        Metoda koja računa visinu stabla.
+        Method that calculates the height of the tree.
 
-        :return: Visina stabla.
+        :return: Height of the tree.
         :rtype: int
         """
 
@@ -200,9 +200,9 @@ class Tree(object):
 
     def _height(self, node):
         """
-        Rekurzivna privatna metoda koja računa visinu određenog čvora.
+        Recursive private method that calculates the height of a specific node.
 
-        :return: Visina čvora.
+        :return: Height of the node.
         :rtype: int
         """
 
@@ -213,9 +213,9 @@ class Tree(object):
 
     def preorder(self, f):
         """
-        Metoda za preorder obilazak stabla.
+        Method for preorder traversal of the tree.
 
-        :param f: Funkcija koja se primjenjuje nad obiđenim čvorom.
+        :param f: Function applied to each visited node.
         :type f: function
         """
 
@@ -223,11 +223,11 @@ class Tree(object):
 
     def _preorder(self, node, f):
         """
-        Privatna rekurzivna metoda za preorder obilazak stabla.
+        Private recursive method for preorder traversal of the tree.
 
-        :param node: Čvor od koga se obilazi.
+        :param node: Node being traversed from.
         :type node: data_structures.GameTree.TreeNode
-        :param f: Funkcija koja se primjenjuje nad obiđenim čvorom.
+        :param f: Function applied to each visited node.
         :type f: function
         """
 
@@ -237,9 +237,9 @@ class Tree(object):
 
     def postorder(self, f):
         """
-        Metoda za postorder obilazak stabla.
+        Method for postorder traversal of the tree.
 
-        :param f: Funkcija koja se primjenjuje nad obiđenim čvorom.
+        :param f: Function applied to each visited node.
         :type f: function
         """
 
@@ -247,11 +247,11 @@ class Tree(object):
 
     def _postorder(self, node, f):
         """
-        Privatna rekurzivna metoda za postorder obilazak stabla.
+        Private recursive method for postorder traversal of the tree.
 
-        :param node: Čvor od koga se obilazi.
+        :param node: Node being traversed from.
         :type node: data_structures.GameTree.TreeNode
-        :param f: Funkcija koja se primjenjuje nad obiđenim čvorom.
+        :param f: Function applied to each visited node.
         :type f: function
         """
 
@@ -262,9 +262,9 @@ class Tree(object):
 
     def breadth(self, f):
         """
-        Metoda za breadth-first obilazak stabla.
+        Method for breadth-first traversal of the tree.
 
-        :param f: Funkcija koja se primjenjuje nad obiđenim čvorom.
+        :param f: Function applied to each visited node.
         :type f: function
         """
 
@@ -278,9 +278,9 @@ class Tree(object):
 
     def euler(self, f):
         """
-        Metoda za Ojlerov obilazak stabla.
+        Method for Eulerian traversal of the tree.
 
-        :param f: Funkcija koja se primjenjuje nad obiđenim čvorom.
+        :param f: Function applied to each visited node.
         :type f: function
         """
 
@@ -288,11 +288,11 @@ class Tree(object):
 
     def _euler(self, node, f):
         """
-        Privatna rekurzivna metoda za postorder obilazak stabla.
+        Private recursive method for Eulerian traversal of the tree.
 
-        :param node: Čvor od koga se obilazi.
+        :param node: Node being traversed from.
         :type node: data_structures.GameTree.TreeNode
-        :param f: Funkcija koja se primjenjuje nad obiđenim čvorom.
+        :param f: Function applied to each visited node.
         :type f: function
         """
 

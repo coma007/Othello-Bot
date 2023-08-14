@@ -1,5 +1,5 @@
 """
-Modul sa funkcijama za računanje heuristike.
+Module containing functions for calculating heuristics.
 """
 
 from game_structures.Game import *
@@ -7,12 +7,12 @@ from game_structures.Game import *
 
 def calculate_heuristics(board):
     """
-    Funkcija za računanje heuristike na osnovu trenutnog sadržaja table.
+    Function for calculating the heuristic based on the current board content.
 
-    :param board: Trenutni izgled table.
+    :param board: Current state of the board.
     :type board: game_structures.Board.Board
 
-    :return: Heuristička vrijednost.
+    :return: Heuristic value.
     :rtype: float
     """
 
@@ -23,14 +23,14 @@ def calculate_heuristics(board):
 
 def heuristics_score(board, color):
     """
-    Pomoćna funkcija za računanje heuristike.
+    Helper function for calculating the heuristic.
 
-    :param board: Trenutni izgled table.
+    :param board: Current state of the board.
     :type board: game_structures.Board.Board
-    :param color: Igrač na potezu.
-    :type color: tuple[int,int,int]
+    :param color: Player making the move.
+    :type color: tuple[int, int, int]
 
-    :return: Heuristička vrijednost.
+    :return: Heuristic value.
     :rtype: float
     """
 
@@ -43,15 +43,14 @@ def heuristics_score(board, color):
 
 def mobility_heuristics(this_legal, other_legal):
     """
-    Pomoćna funkcija za računanje heurističke vrijednosti na osnovu mobilnosti jednog igrača u odnosu na drugog.
-    i broja susjednih figurica.
+    Helper function for calculating the heuristic value based on one player's mobility relative to the other and the number of adjacent pieces.
 
-    :param this_legal: Broj legalnih poteza igrača na potezu.
+    :param this_legal: Number of legal moves for the player making the move.
     :type this_legal: int
-    :param other_legal: Broj legalnih poteza drugog igrača nakon odigranog poteza.
+    :param other_legal: Number of legal moves for the other player after the move is made.
     :type other_legal: int
 
-    :return: Heuristička vrijednost.
+    :return: Heuristic value.
     :rtype: float
     """
 
@@ -69,15 +68,14 @@ def mobility_heuristics(this_legal, other_legal):
 
 def board_heuristics(board, color):
     """
-    Pomoćna funkcija za računanje heurističke vrijednosti na osnovu položaja figurica na tabli.
-    i broja susjednih figurica.
+    Helper function for calculating the heuristic value based on the positions of pieces on the board and the number of adjacent pieces.
 
-    :param board: Trenutni izgled table.
+    :param board: Current state of the board.
     :type board: game_structures.Board.Board
-    :param color: Igrač na potezu.
-    :type color: tuple[int,int,int]
+    :param color: Player making the move.
+    :type color: tuple[int, int, int]
 
-    :return: Heuristička vrijednost.
+    :return: Heuristic value.
     :rtype: float
     """
 
@@ -131,15 +129,14 @@ def board_heuristics(board, color):
 
 def pieces_number_heuristics(board, color):
     """
-    Pomoćna funkcija za računanje heurističke vrijednosti na osnovu broja figurica na tabli.
-    i broja susjednih figurica.
+    Helper function for calculating the heuristic value based on the number of pieces on the board and the number of adjacent pieces.
 
-    :param board: Trenutni izgled table.
+    :param board: Current state of the board.
     :type board: game_structures.Board.Board
-    :param color: Igrač na potezu.
-    :type color: tuple[int,int,int]
+    :param color: Player making the move.
+    :type color: tuple[int, int, int]
 
-    :return: Heuristička vrijednost.
+    :return: Heuristic value.
     :rtype: float
     """
 
@@ -165,15 +162,14 @@ def pieces_number_heuristics(board, color):
 
 def corners_heuristics(board, color):
     """
-    Pomoćna funkcija za računanje heurističke vrijednosti na osnovu položaja figurica na tabli u odnosu na uglove table.
-    i broja susjednih figurica.
+    Helper function for calculating the heuristic value based on the positions of pieces on the board relative to the table's corners and the number of adjacent pieces.
 
-    :param board: Trenutni izgled table.
+    :param board: Current state of the board.
     :type board: game_structures.Board.Board
-    :param color: Igrač na potezu.
-    :type color: tuple[int,int,int]
+    :param color: Player making the move.
+    :type color: tuple[int, int, int]
 
-    :return: Heuristička vrijednost.
+    :return: Heuristic value.
     :rtype: float
     """
 

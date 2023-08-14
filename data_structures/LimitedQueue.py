@@ -1,7 +1,6 @@
 """
-Implementacija strukture podataka red.
+Implementation of the data structure Queue.
 """
-
 
 class EmptyQueueException(Exception):
     pass
@@ -13,14 +12,14 @@ class FullQueueException(Exception):
 
 class LimitedQueue(object):
     """
-    Klasa LimitedQueue modeluje red.
+    Class LimitedQueue models a queue.
     """
 
     def __init__(self, default_capacity):
         """
-        Konstruktor klase LimitedQueue.
+        Constructor of the LimitedQueue class.
 
-        :param default_capacity: Podrazumijevani kapacitet
+        :param default_capacity: Default capacity.
         :type default_capacity: int
         """
 
@@ -50,7 +49,7 @@ class LimitedQueue(object):
 
     def show_queue(self):
         """
-        Metoda za ispis svih elemenata reda.
+        Method to display all elements in the queue.
         """
 
         for i in range(self._capacity):
@@ -58,19 +57,19 @@ class LimitedQueue(object):
 
     def is_empty(self):
         """
-        Metoda koja provjerava da li je red prazan.
+        Method to check if the queue is empty.
 
-        :return: True ako je prazno, u suprotnom False.
+        :return: True if empty, False otherwise.
         :rtype: bool
         """
 
         return self._size == 0
 
-    def get_frist(self):
+    def get_first(self):
         """
-        Metoda koja vraća prvi element reda.
+        Method that returns the first element in the queue.
 
-        :raises EmptyQueueException: Ukoliko je red prazan.
+        :raises EmptyQueueException: If the queue is empty.
         """
 
         if self.is_empty():
@@ -79,10 +78,10 @@ class LimitedQueue(object):
 
     def enqueue(self, elem):
         """
-        Metoda koja dodaje novi element u red.
+        Method to add a new element to the queue.
 
-        :param elem: Novi element.
-        :raises FullQueueException: Ukoliko je red pun.
+        :param elem: New element.
+        :raises FullQueueException: If the queue is full.
         """
 
         if self._rear == self._capacity:
@@ -100,9 +99,9 @@ class LimitedQueue(object):
 
     def dequeue(self):
         """
-        Metoda koja element na redu izbacuje iz reda.
+        Method that removes and returns the element at the front of the queue.
 
-        :return: Izbačen element.
+        :return: Removed element.
         """
 
         tmp = self._queue[self._front]
@@ -110,4 +109,3 @@ class LimitedQueue(object):
         self._front = (self._front + 1) % self._capacity
         self._size -= 1
         return tmp
-

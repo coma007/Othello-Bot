@@ -1,19 +1,18 @@
 """
-Implementacija strukture podataka mapa i element mape.
+Implementation of the data structure Map and map item.
 """
-
 
 class MapItem(object):
     """
-    Klasa MapItem modeluje jedan element iz mape.
+    Class MapItem models a single element in the map.
     """
 
     def __init__(self, key, value):
         """
-        Konstruktor klase MapItem.
+        Constructor of the MapItem class.
 
-        :param key: Ključ.
-        :param value: Vrijednost.
+        :param key: Key.
+        :param value: Value.
         """
 
         self._key = key
@@ -39,14 +38,13 @@ class MapItem(object):
 
 
 class Map(object):
-
     """
-    Klasa Map modeluje mapu.
+    Class Map models a map.
     """
 
     def __init__(self):
         """
-        Konstruktor klase Map.
+        Constructor of the Map class.
         """
         self._data = []
 
@@ -90,9 +88,9 @@ class Map(object):
 
     def items(self):
         """
-        Metoda za iteriranje elementima mape.
+        Method for iterating through the map's items.
 
-        :return: Uređen par (ključ, vrijednost).
+        :return: Ordered pair (key, value).
         """
 
         for item in self._data:
@@ -100,9 +98,9 @@ class Map(object):
 
     def keys(self):
         """
-        Metoda za dobijanje svih ključeva iz mape.
+        Method to get all keys from the map.
 
-        :return: Lista svih ključeva.
+        :return: List of all keys.
         :rtype: list
         """
 
@@ -113,9 +111,9 @@ class Map(object):
 
     def values(self):
         """
-        Metoda za dobijanje svih vrijednosti iz mape.
+        Method to get all values from the map.
 
-        :return: Lista svih vrijednosti.
+        :return: List of all values.
         :rtype: list
         """
 
@@ -126,8 +124,7 @@ class Map(object):
 
     def clear(self):
         """
-        Metoda za brisanje svih elemenata iz mape.
+        Method to clear all elements from the map.
         """
 
         self._data = []
-

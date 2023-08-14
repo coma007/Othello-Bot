@@ -1,5 +1,5 @@
 """
-Modul sa klasom Piece.
+Module with the Piece class.
 """
 
 try:
@@ -11,20 +11,20 @@ from constants import *
 
 class Piece:
     """
-    Klasa Piece modeluje jednu figuricu.
+    The Piece class models a single game piece.
     """
 
     def __init__(self, row, column, color, mode):
         """
-        Konstruktor klase Piece.
+        Constructor of the Piece class.
 
-        :param row: Red polja na kom je figurica.
+        :param row: Row of the field where the piece is located.
         :type row: int
-        :param column: Kolona polja na kom je figurica.
+        :param column: Column of the field where the piece is located.
         :type column: int
-        :param color: Boja figurice.
+        :param color: Color of the piece.
         :type color: tuple[int, int, int]
-        :param mode: Režim igranja.
+        :param mode: Game mode.
         :type mode: int
         """
 
@@ -67,7 +67,7 @@ class Piece:
 
     def _position(self):
         """
-        Privatna metoda koja se koristi u GUI režimu kako bi izračunala pozicija figurice u prozoru.
+        Private method used in GUI mode to calculate the position of the piece in the window.
         """
 
         self._x = SQUARE_SIZE * self._column + SQUARE_SIZE // 2
@@ -75,7 +75,7 @@ class Piece:
 
     def draw_piece(self, window):
         """
-        Metoda koja se koristi u GUI režimu kako bi se iscrtala figurica.
+        Method used in GUI mode to draw the piece.
         """
 
         radius = SQUARE_SIZE // 2 - 10

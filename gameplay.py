@@ -1,5 +1,5 @@
 """
-Modul sa osnovnim funkcijama vezanim za tok igre.
+Module with basic game flow functions.
 """
 
 from bot_logic.bot import *
@@ -8,24 +8,24 @@ from time import time
 
 def play_player(game, hash_map, game_tree, player, row=None, column=None, start=None):
     """
-    Pomoćna funkcija za određivanje poteza jednog igrača.
+    Helper function for determining a player's move.
 
-    :param game: Igra.
+    :param game: Game instance.
     :type game: Game
-    :param hash_map: Heš mapa.
+    :param hash_map: Hash map.
     :type hash_map: data_structures.HashMap.HashMap
-    :param game_tree: Stablo igre.
+    :param game_tree: Game tree.
     :type game_tree: data_structures.GameTree.Tree
-    :param player: Igrač na potezu.
+    :param player: Current player.
     :type player: tuple[int, int, int]
-    :param row: Izabran red (za crnog igrača).
+    :param row: Chosen row (for the black player).
     :type row: int or NoneType
-    :param column: Izabrana kolona (za crnog igrača).
+    :param column: Chosen column (for the black player).
     :type column: int or NoneType
-    :param start: Vrijeme na početku poteza.
+    :param start: Start time of the move.
     :type start: float or NoneType
 
-    :return: Vrijeme na kraju poteza i uspješnost odigravanja poteza.
+    :return: End time of the move and whether the move was successful.
     :rtype: tuple[float, bool]
     """
 
@@ -49,13 +49,13 @@ def play_player(game, hash_map, game_tree, player, row=None, column=None, start=
 
 def play_console(game, hash_map, game_tree):
     """
-    Glavna funkcija za igranje u konzolnom režimu.
+    Main function for playing in console mode.
 
-    :param game: Igra.
+    :param game: Game instance.
     :type game: Game
-    :param hash_map: Heš mapa.
+    :param hash_map: Hash map.
     :type hash_map: HashMap
-    :param game_tree: Stablo igre.
+    :param game_tree: Game tree.
     :type game_tree: Tree
     """
 
@@ -78,26 +78,26 @@ def play_console(game, hash_map, game_tree):
             play_player(game, hash_map, game_tree, WHITE, None, None, start)
     winner = game.winner()
     if winner != "TIE":
-        print(f"Game over ! {winner} WON !")
+        print(f"Game over! {winner} WON!")
     else:
-        print(f"Game over ! TIE !")
+        print("Game over! TIE!")
 
 
 def play_gui(game, hash_map, window, fps, font, game_tree):
     """
-    Glavna funkcija za igranje u GUI režimu.
+    Main function for playing in GUI mode.
 
-    :param game: Igra.
+    :param game: Game instance.
     :type game: Game
-    :param hash_map: Heš mapa.
+    :param hash_map: Hash map.
     :type hash_map: data_structures.HashMap.HashMap
-    :param window: Prozor u kom se prikazuje igra.
+    :param window: Window in which the game is displayed.
     :type window: pygame.Surface
-    :param fps: Broj frejmova po sekundi.
+    :param fps: Frames per second.
     :type fps: int
-    :param font: Font teksta u prozoru.
+    :param font: Text font in the window.
     :type font: pygame.font.Font
-    :param game_tree: Stablo igre.
+    :param game_tree: Game tree.
     :type game_tree: Tree
     """
 
@@ -126,13 +126,13 @@ def play_gui(game, hash_map, window, fps, font, game_tree):
         winner = game.winner()
         if winner is not None:
             if winner == "TIE":
-                winner_text = "       TIE !        "
+                winner_text = "       TIE!        "
             else:
-                winner_text = f"{winner} won !"
+                winner_text = f"{winner} won!"
             window.blit(font.render(f"      "
                                     f"Black: {game.black}          "
                                     f"White: {game.white}                          "
-                                    f"Game over !      "
+                                    f"Game over!      "
                                     f"{winner_text}                  ", True, BLACK, WHITE), textbox)
         pygame.display.update()
         if game.turn == WHITE:
@@ -145,23 +145,23 @@ def play_gui(game, hash_map, window, fps, font, game_tree):
                 window.blit(text, textbox)
                 start = end
         pygame.display.update()
-    print(winner, "WON ! ")
+    print(f"{winner} WON!")
     pygame.quit()
 
 
 def main_gui(mode, game, hash_map, window, game_tree):
     """
-    Inicijalizacija parametara potrebnih za igru u GUI režimu.
+    Initialization of parameters needed for GUI mode.
 
-    :param mode: Režim.
+    :param mode: Mode.
     :type mode: int
-    :param game: Igra.
+    :param game: Game instance.
     :type game: Game
-    :param hash_map: Heš mapa.
+    :param hash_map: Hash map.
     :type hash_map: data_structures.HashMap.HashMap
-    :param window: Prozor u kom se prikazuje igra.
+    :param window: Window in which the game is displayed.
     :type window: pygame.Surface
-    :param game_tree: Stablo igre.
+    :param game_tree: Game tree.
     :type game_tree: Tree
     """
 
@@ -175,22 +175,22 @@ def main_gui(mode, game, hash_map, window, game_tree):
 
 def nortifications(window, font=None, black=2, white=2, last_played="", elapsed_time=0.00):
     """
-    Pomoćna funkcija za ispisivanje obavještenja u GUI režimu.
+    Helper function for displaying notifications in GUI mode.
 
-    :param window: Prozor u kom se prikazuje igra.
+    :param window: Window in which the game is displayed.
     :type window: pygame.Surface
-    :param font: Font teksta u prozoru.
+    :param font: Text font in the window.
     :type font: pygame.font.Font
-    :param black: Broj crnih figurica na tabli.
+    :param black: Number of black pieces on the board.
     :type black: int
-    :param white: Broj bijelih figurica na tabli.
+    :param white: Number of white pieces on the board.
     :type white: int
-    :param last_played: Igrač koji je upravo odigrao potez.
+    :param last_played: Player who just made a move.
     :type last_played: str
-    :param elapsed_time: Trajanje zadnjeg odigranog poteza.
+    :param elapsed_time: Duration of the last played move.
     :type elapsed_time: float
 
-    :return: Tekst i prostor za tekst koji se treba prikazati u prozoru.
+    :return: Text and text box area to be displayed in the window.
     :rtype: tuple[pygame.Surface, pygame.Rect]
     """
 
@@ -207,13 +207,13 @@ def nortifications(window, font=None, black=2, white=2, last_played="", elapsed_
 
 def mouse_action(position):
     """
-    Pomoćna funkcija za računanje koordinata izabranog polja u GUI režimu na osnovu akcije miša.
+    Helper function for calculating the selected field's coordinates in GUI mode based on mouse action.
 
-    :param position: Koordinate zabilježene tokom akcije miša.
-    :type position: tuple[int,int]
+    :param position: Coordinates recorded during mouse action.
+    :type position: tuple[int, int]
 
-    :return: Red i kolona polja na tabli koje je izabrano.
-    :rtype: tuple[int,int]
+    :return: Row and column of the selected field on the board.
+    :rtype: tuple[int, int]
     """
 
     x, y = position

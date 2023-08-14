@@ -1,10 +1,10 @@
 """
-Glavni modul.
+Main module.
 """
 
 __author__ = "Milica Sladaković"
 __index__ = "SV 18/2020"
-__course__ = "Algoritmi i strukture podataka, SIIT, FTN, 2021."
+__course__ = "Algorithms and Data Structures, SIIT, FTN, 2021."
 __project__ = "Othello/Reversi Game"
 
 from gameplay import *
@@ -14,9 +14,9 @@ from data_structures.GameTree import *
 
 def select_mode():
     """
-    Funkcija za biranje režima u kom se pokreće igra.
+    Function to select the game mode.
 
-    :return: 1 ako je režim konzolni, 2 ako je GUI režim.
+    :return: 1 for console mode, 2 for GUI mode.
     :rtype: int
     """
 
@@ -29,9 +29,9 @@ def select_mode():
 
 def init_game():
     """
-    Funkcija za inicijalizaciju osnovnih struktura koje će se koristiti tokom igre.
+    Function to initialize the basic structures used during the game.
 
-    :return: Strukture i podaci potrebni za nastavak igre.
+    :return: Structures and data needed for the game continuation.
     :rtype: tuple[Game, HashMap, Tree, int]
     """
 
@@ -49,7 +49,7 @@ def init_game():
 
 def begin():
     """
-    Funkcija za inicijalizaciju igre.
+    Function to initialize the game.
     """
 
     game, hash_map, game_tree, mode = init_game()
@@ -66,5 +66,4 @@ def begin():
 
 
 if __name__ == '__main__':
-
     begin()

@@ -1,5 +1,5 @@
 """
-Implementacija strukture podataka heš mapa.
+Implementation of the data structure HashMap.
 """
 
 from data_structures.Array import *
@@ -10,14 +10,14 @@ from constants import *
 
 class HashMap(object):
     """
-    Klasa HashMap modeluje heš mapu.
+    Class HashMap models a hash map.
     """
 
     def __init__(self, capacity=128):
         """
-        Konstruktor klase HashMap.
+        Constructor of the HashMap class.
 
-        :param capacity: Kapacitet heš mape.
+        :param capacity: Capacity of the hash map.
         :type capacity: int
         """
 
@@ -62,7 +62,7 @@ class HashMap(object):
 
     def _init_buckets(self):
         """
-        Privatna metoda za iniciranje bucket-a u heš mapi.
+        Private method to initialize buckets in the hash map.
         """
 
         for i in range(self._capacity):
@@ -70,9 +70,9 @@ class HashMap(object):
 
     def _init_table(self):
         """
-        Privatna metoda za iniciranje vrijednosti polja na tabli.
+        Private method to initialize field values on the board.
 
-        :return: Tabla sa vrijednostima svakog polja.
+        :return: Table with values for each field.
         :rtype: list
         """
 
@@ -89,11 +89,11 @@ class HashMap(object):
 
     def _Zobrist_hashing(self, key):
         """
-        Zobrist heširanje ključa (prvo heširanje).
+        Zobrist hashing of the key (first hashing).
 
-        :param key: Ključ.
+        :param key: Key.
 
-        :return: Heširan ključ.
+        :return: Hashed key.
         :rtype: int
         """
 
@@ -113,11 +113,11 @@ class HashMap(object):
 
     def _compress_key(self, key):
         """
-        Privatna metoda za drugo heširanje i kompresovanje ključa.
+        Private method for second hashing and compressing the key.
 
-        :param key: Ključ.
+        :param key: Key.
 
-        :return: Kompresovan ključ.
+        :return: Compressed key.
         :rtype: int
         """
 
@@ -127,13 +127,13 @@ class HashMap(object):
 
     def _bucket_getitem(self, index, key):
         """
-        Privatna metoda za dobijanje elementa iz bucket-a na osnovu ključa.
+        Private method to retrieve an item from a bucket based on the key.
 
-        :param index: Indeks ključa u bucket-u.
+        :param index: Index of the key in the bucket.
         :type index: int
-        :param key: Ključ.
+        :param key: Key.
 
-        :return: Vrijednost pod ključem.
+        :return: Value under the key.
         """
 
         bucket = self._table[index]
@@ -141,12 +141,12 @@ class HashMap(object):
 
     def _bucket_setitem(self, index, key, value):
         """
-        Privatna metoda za postavljanje elementa u bucket na osnovu ključa.
+        Private method to set an item in a bucket based on the key.
 
-        :param index: Indeks ključa u bucket-u.
+        :param index: Index of the key in the bucket.
         :type index: int
-        :param key: Ključ.
-        :param value: Vrijednost.
+        :param key: Key.
+        :param value: Value.
         """
 
         bucket = self._table[index]
@@ -154,11 +154,11 @@ class HashMap(object):
 
     def _bucket_delitem(self, index, key):
         """
-        Privatna metoda za brisanje elementa iz bucket-a na osnovu ključa.
+        Private method to delete an item from a bucket based on the key.
 
-        :param index: Indeks ključa u bucket-u.
+        :param index: Index of the key in the bucket.
         :type index: int
-        :param key: Ključ.
+        :param key: Key.
         """
 
         bucket = self._table[index]
