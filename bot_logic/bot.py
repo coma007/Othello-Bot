@@ -1,17 +1,17 @@
 """
-Modul sa osnovnim funkcijama vezanim za igru AI_logic-a.
+Modul sa osnovnim funkcijama vezanim za igru bot_logic-a.
 """
 
-from AI_logic.heuristics import *
+from bot_logic.heuristics import *
 from data_structures.GameTree import *
 from math import inf
 from copy import deepcopy
 from time import time
 
 
-def ai_play(board, hash_map, current_node):
+def bot_play(board, hash_map, current_node):
     """
-    Glavna funkcija za odigravanje poteza AI_logic-a, tj. bijelog igrača.
+    Glavna funkcija za odigravanje poteza bot_logic-a, tj. bijelog igrača.
 
     :param board: Trenutno stanje na tabli..
     :type board: game_structures.Board.Board
@@ -58,7 +58,7 @@ def variable_depth(state, elapsed_time):
 def minimax(state, depth, hash_map, current_node, elapsed_time, player=WHITE, alpha=-float(inf), beta=float(inf)):
     """
     Minimax algoritam sa alfa-beta rezom.
-    AI_logic je bijeli igrač, dakle u ovom slučaju je bijeli igrač Maximizer, a crni Minimizer.
+    bot_logic je bijeli igrač, dakle u ovom slučaju je bijeli igrač Maximizer, a crni Minimizer.
 
     :param state: Trenutno stanje na tabli.
     :type state: game_structures.Board.Board

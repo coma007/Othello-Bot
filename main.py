@@ -7,7 +7,6 @@ __index__ = "SV 18/2020"
 __course__ = "Algoritmi i strukture podataka, SIIT, FTN, 2021."
 __project__ = "Othello/Reversi Game"
 
-
 from gameplay import *
 from data_structures.HashMap import *
 from data_structures.GameTree import *

@@ -133,7 +133,7 @@ class Game(object):
         :type row: int
         :param column: Kolona.
         :type column: int
-        :param depth: Dubina na kojoj se računao najbolji potez ukoliko je na potezu AI_logic.
+        :param depth: Dubina na kojoj se računao najbolji potez ukoliko je na potezu bot_logic.
         :type depth: int
         :param elapsed_time: Trajanje poteza.
         :type elapsed_time: float

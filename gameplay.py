@@ -2,7 +2,7 @@
 Modul sa osnovnim funkcijama vezanim za tok igre.
 """
 
-from AI_logic.AI import *
+from bot_logic.bot import *
 from time import time
 
 
@@ -30,7 +30,7 @@ def play_player(game, hash_map, game_tree, player, row=None, column=None, start=
     """
 
     if player == WHITE:
-        row, col, depth = ai_play(game.board, hash_map, game_tree.current)
+        row, col, depth = bot_play(game.board, hash_map, game_tree.current)
         elapsed_time = time() - start
         moved = game.play(row, col, depth, elapsed_time)
     else:
